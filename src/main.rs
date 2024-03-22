@@ -5,15 +5,15 @@ use std::fs::File;
 use std::path::Path;
 use std::io::Write;
 
-use image::{GenericImageView, Pixel, imageops::FilterType};
+use image::{Pixel, imageops::FilterType};
 
 fn main() {
-    let mut file : String;
-    let mut scale : u32;
+    let file : String;
+    let scale : u32;
     if env::args().count() == 3 {
         file = env::args().nth(1).unwrap();
-        let scaleResult = env::args().nth(2).unwrap().trim().parse();
-        scale = match scaleResult {
+        let scale_result = env::args().nth(2).unwrap().trim().parse();
+        scale = match scale_result {
             Ok(s) => s,
             Err(error) => panic!("Scale should be integer: {:?}", error),
         };
@@ -66,5 +66,5 @@ fn main() {
     }
 
     let mut file = File::create("test/output.txt").unwrap();
-    file.write_all(text.as_bytes());
+    file.write_all(text.as_bytes()).expect("Failed to write to ./test/output.txt");
 }
